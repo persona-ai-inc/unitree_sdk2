@@ -56,6 +56,23 @@ target_include_directories(unitree_sdk2 INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 
+## Import Onnxruntime library
+set(ONNXRUNTIME_SDK_PATH ${CMAKE_CURRENT_LIST_DIR}/lib/${CMAKE_SYSTEM_PROCESSOR})
+find_library(ONNXRUNTIME_SDK_LIB onnxruntime PATHS ${ONNXRUNTIME_SDK_PATH} NO_DEFAULT_PATH)
+
+if (NOT ONNXRUNTIME_SDK_LIB)
+    message(FATAL_ERROR "Onnxruntime library for the architecture is not found")
+else ()
+    message(STATUS "Onnxruntime library found at: ${ONNXRUNTIME_SDK_LIB}")
+endif ()
+
+message(STATUS "Importing: ${ONNXRUNTIME_SDK_LIB}")
+
+add_library(onnxruntime STATIC IMPORTED GLOBAL)
+set_target_properties(onnxruntime PROPERTIES
+        IMPORTED_LOCATION ${ONNXRUNTIME_SDK_LIB})
+target_link_directories(onnxruntime INTERFACE ${ONNXRUNTIME_SDK_PATH})
+
 if (BUILD_EXAMPLES)
     add_subdirectory(example)
 endif ()
