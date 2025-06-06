@@ -15,6 +15,9 @@ add_executable(g1_onnx_example low_level/g1_onnx_example.cpp)
 target_link_libraries(g1_onnx_example unitree_sdk2)
 target_link_libraries(g1_onnx_example onnxruntime)
 
+add_executable(onnx_example low_level/onnx_example.cpp)
+target_link_libraries(onnx_example onnxruntime)
+
 # add_executable(g1_audio_client_example audio/g1_audio_client_example.cpp)
 # target_link_libraries(g1_audio_client_example unitree_sdk2)
 

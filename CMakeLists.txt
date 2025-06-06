@@ -71,6 +71,9 @@ message(STATUS "Importing: ${ONNXRUNTIME_SDK_LIB}")
 add_library(onnxruntime STATIC IMPORTED GLOBAL)
 set_target_properties(onnxruntime PROPERTIES
         IMPORTED_LOCATION ${ONNXRUNTIME_SDK_LIB})
+target_include_directories(onnxruntime INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>)
 target_link_directories(onnxruntime INTERFACE ${ONNXRUNTIME_SDK_PATH})
 
 if (BUILD_EXAMPLES)
